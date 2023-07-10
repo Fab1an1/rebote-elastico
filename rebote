@@ -1,0 +1,35 @@
+import matplotlib.pyplot as plt
+
+def simulate_ball_rebound(initial_height, initial_velocity, deceleration):
+    time_step = 0.001  # Intervalo de tiempo para la simulación
+    time = 0  # Tiempo inicial
+    height = initial_height  # Altura inicial
+    velocity = initial_velocity  # Velocidad inicial
+    positions = []  # Lista para almacenar las posiciones de la pelota
+    max_positions = 1000  # Número máximo de puntos de posición a almacenar
+
+    while height >= 0:
+        if len(positions) < max_positions:
+            positions.append(height)
+        velocity += deceleration * velocity**2 * time_step  # Actualizar la velocidad
+        height += velocity * time_step  # Actualizar la altura
+        time += time_step
+
+    return positions
+
+# Parámetros iniciales
+initial_height = 3  # Altura inicial en metros
+initial_velocity = 4  # Velocidad inicial en m/s
+deceleration = -0.1  # Desaceleración en función de la velocidad al cuadrado
+
+# Simulación del rebote
+positions = simulate_ball_rebound(initial_height, initial_velocity, deceleration)
+
+# Graficar la trayectoria
+time = [i * 0.001 for i in range(len(positions))]  # Tiempo en segundos (intervalo de 0.001 segundos)
+plt.plot(time, positions)
+plt.xlabel("Tiempo (s)")
+plt.ylabel("Altura (m)")
+plt.title("Trayectoria de rebote de la pelota")
+plt.grid(True)
+plt.show()
